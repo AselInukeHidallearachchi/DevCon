@@ -141,4 +141,26 @@ router.get("/user/:user_id", async (req, res) => {
   }
 });
 
+// @route   DELETE api/profile
+// @desc    Delete profile & user
+// @access  Private
+router.delete("/", auth, async (req, res) => {
+  try {
+  // Remove profile
+  // use findOneAndDelete (preferred) instead of deprecated/removed findOneAndRemove
+  await Profile.findOneAndDelete({ user: req.user.id });
+
+    // TODO: Remove user's posts (if you have posts collection)
+
+  // Remove user
+  // use findByIdAndDelete which is the standard pattern for deleting by _id
+  await User.findByIdAndDelete(req.user.id);
+
+    res.json({ msg: "User removed" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 module.exports = router;
