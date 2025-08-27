@@ -1,4 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://***REMOVED***.ua9hbad.mongodb.net/?retryWrites=true&w=majority&appName=DevConnector",
+  "mongoURI": "mongodb+srv://***REMOVED***.ua9hbad.mongodb.net/DevConnector?retryWrites=true&w=majority&appName=DevConnector",
   "jwtSecret": "***REMOVED***"
 }
