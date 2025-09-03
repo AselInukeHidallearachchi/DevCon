@@ -6,6 +6,7 @@ const auth = require("../../middleware/auth"); // Custom middleware for authenti
 // models file is named `Posts.js` in the project, require the correct path
 const Post = require("../../models/Posts");
 const User = require("../../models/User");
+const mongoose = require("mongoose");
 
 // @route   POST api/posts
 // @desc    Create a post
@@ -45,5 +46,78 @@ router.post(
     }
   }
 );
+
+// @route   GET api/posts
+// @desc    Get all posts
+// @access  Private
+router.get("/", auth, async (req, res) => {
+  try {
+    // Get posts and sort by most recent first
+    const posts = await Post.find().sort({ date: -1 });
+    res.json(posts);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
+// @route   GET api/posts/:id
+// @desc    Get post by ID
+// @access  Private
+router.get("/:id", auth, async (req, res) => {
+  try {
+    // validate id before querying to avoid Cast to ObjectId errors
+    if (!mongoose.isValidObjectId(req.params.id)) {
+      return res.status(404).json({ msg: "Post not found" });
+    }
+
+    const post = await Post.findById(req.params.id);
+
+    if (!post) {
+      return res.status(404).json({ msg: "Post not found" });
+    }
+
+    res.json(post);
+  } catch (err) {
+    console.error(err.message);
+
+    // If it's not a valid object ID, return the same message
+    if (err.kind === "ObjectId") {
+      return res.status(404).json({ msg: "Post not found" });
+    }
+
+    res.status(500).send("Server error");
+  }
+});
+
+// @route   DELETE api/posts/:id
+// @desc    Delete a post
+// @access  Private
+router.delete("/:id", auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+
+    if (!post) {
+      return res.status(404).json({ msg: "Post not found" });
+    }
+
+    // Check if the logged-in user is the owner of the post
+    if (post.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: "User not authorized" });
+    }
+    // use deleteOne() (or Post.findByIdAndDelete) instead of remove()
+    await post.deleteOne();
+    res.json({ msg: "Post removed" });
+  } catch (err) {
+    console.error(err.message);
+
+    // If it's not a valid object ID, return the same message
+    if (err.kind === "ObjectId") {
+      return res.status(404).json({ msg: "Post not found" });
+    }
+
+    res.status(500).send("Server error");
+  }
+});
 
 module.exports = router;
