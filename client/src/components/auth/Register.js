@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -10,28 +12,41 @@ const Register = () => {
 
   const { name, email, password, password2 } = formData;
 
-  const onChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== password2) {
       console.log("Passwords do not match");
     } else {
-      console.log("Form data:", formData);
-      // You can later dispatch a Redux action here to send the form data to the backend
+      const newUser = { name, email, password };
+
+      try {
+        const config = {
+          headers: { "Content-Type": "application/json" },
+        };
+
+        // Use the direct backend URL
+        const res = await axios.post(
+          "http://localhost:5001/api/users",
+          newUser,
+          config
+        );
+        console.log(res.data); // JWT token
+      } catch (err) {
+        console.error(err.response.data);
+      }
     }
   };
 
   return (
-    <div className="container">
+    <>
       <h1 className="large text-primary">Sign Up</h1>
-      <p className="lead">Create Your Account</p>
+      <p className="lead">
+        <i className="fas fa-user"></i> Create Your Account
+      </p>
       <form className="form" onSubmit={onSubmit}>
         <div className="form-group">
           <input
@@ -60,7 +75,7 @@ const Register = () => {
             name="password"
             value={password}
             onChange={onChange}
-            required
+            minLength="6"
           />
         </div>
         <div className="form-group">
@@ -70,12 +85,15 @@ const Register = () => {
             name="password2"
             value={password2}
             onChange={onChange}
-            required
+            minLength="6"
           />
         </div>
         <input type="submit" className="btn btn-primary" value="Register" />
       </form>
-    </div>
+      <p className="my-1">
+        Already have an account? <Link to="/login">Sign In</Link>
+      </p>
+    </>
   );
 };
 
