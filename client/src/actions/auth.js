@@ -8,6 +8,7 @@ import {
   AUTH_ERROR,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  LOGOUT,
 } from "./types";
 
 // Load user (using the token already set in localStorage)
@@ -69,4 +70,9 @@ export const login = (email, password) => async (dispatch) => {
     if (errors) errors.forEach((e) => dispatch(setAlert(e.msg, "danger")));
     dispatch({ type: LOGIN_FAIL });
   }
+};
+
+// Logout / Clear Profile
+export const logout = () => (dispatch) => {
+  dispatch({ type: LOGOUT });
 };
