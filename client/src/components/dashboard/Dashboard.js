@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { getCurrentProfile } from "../../actions/profile";
 import Spinner from "../layout/Spinner";
 import DashboardActions from "./DashboardActions";
+import Experience from "./Experience";
+import Education from "./Education";
 
 const Dashboard = ({
   getCurrentProfile,
@@ -23,6 +25,8 @@ const Dashboard = ({
         <div>
           <h2>Welcome, {user && user.name}</h2>
           <DashboardActions />
+          <Experience experience={profile.experience} />
+          <Education education={profile.education} />
         </div>
       ) : (
         <div>
