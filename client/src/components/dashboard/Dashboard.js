@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getCurrentProfile } from "../../actions/profile";
 import Spinner from "../layout/Spinner";
+import DashboardActions from "./DashboardActions";
 
 const Dashboard = ({
   getCurrentProfile,
@@ -21,7 +22,7 @@ const Dashboard = ({
       {profile !== null ? (
         <div>
           <h2>Welcome, {user && user.name}</h2>
-          {/* Show user's profile details here */}
+          <DashboardActions />
         </div>
       ) : (
         <div>
