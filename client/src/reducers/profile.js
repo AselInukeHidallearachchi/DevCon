@@ -23,14 +23,14 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         error: payload,
         loading: false,
-        profile: null
+        profile: null,
       };
     case CLEAR_PROFILE:
       return {
         ...state,
         profile: null,
         repos: [],
-        loading: false
+        loading: false,
       };
     default:
       return state;

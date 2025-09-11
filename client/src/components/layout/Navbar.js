@@ -9,7 +9,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     <ul>
       <li>
         <Link to="/dashboard">
-          <i className="fas fa-user" />{' '}
+          <i className="fas fa-user" />{" "}
           <span className="hide-sm">Dashboard</span>
         </Link>
       </li>
