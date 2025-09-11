@@ -1,32 +1,33 @@
 import api from "../utils/api";
 import { setAlert } from "./alert";
+import setAuthToken from "../utils/setAuthToken";
 import {
-  REGISTER_SUCCESS,
-  REGISTER_FAIL,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
   USER_LOADED,
   AUTH_ERROR,
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
 } from "./types";
-import setAuthToken from "../utils/setAuthToken";
 
-// Load user
+// Load user (using the token already set in localStorage)
 export const loadUser = () => async (dispatch) => {
-  // If a token exists in localStorage, stick it on Axios headers
   if (localStorage.token) {
-    setAuthToken(localStorage.token);
+    setAuthToken(localStorage.token); // Set token header
   }
 
   try {
     const res = await api.get("/api/auth");
     dispatch({
       type: USER_LOADED,
-      payload: res.data, // user object (name, email, avatar)
+      payload: res.data, // User data
     });
   } catch (err) {
     dispatch({ type: AUTH_ERROR });
   }
 };
 
-// Register user (from the previous step, unchanged except imports)
+// Register User
 export const register =
   ({ name, email, password }) =>
   async (dispatch) => {
@@ -41,12 +42,31 @@ export const register =
         payload: res.data, // { token }
       });
 
-      // Load user immediately after successful registration
-      dispatch(loadUser());
+      dispatch(loadUser()); // Load user after registration
     } catch (err) {
       const errors = err?.response?.data?.errors;
       if (errors) errors.forEach((e) => dispatch(setAlert(e.msg, "danger")));
-
       dispatch({ type: REGISTER_FAIL });
     }
   };
+
+// Login User
+export const login = (email, password) => async (dispatch) => {
+  const config = { headers: { "Content-Type": "application/json" } };
+  const body = JSON.stringify({ email, password });
+
+  try {
+    const res = await api.post("/api/auth", body, config);
+
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data, // { token }
+    });
+
+    dispatch(loadUser()); // Load user data after login
+  } catch (err) {
+    const errors = err?.response?.data?.errors;
+    if (errors) errors.forEach((e) => dispatch(setAlert(e.msg, "danger")));
+    dispatch({ type: LOGIN_FAIL });
+  }
+};

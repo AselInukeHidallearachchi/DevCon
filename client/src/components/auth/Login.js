@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { login } from "../../actions/auth";
+import PropTypes from "prop-types";
+import { Navigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -14,14 +17,19 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log("SUCCESS"); // later this will dispatch Redux login action
+    login(email, password);
   };
 
+  // Redirect if logged in
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
   return (
-    <>
+    <section className="container">
       <h1 className="large text-primary">Sign In</h1>
       <p className="lead">
-        <i className="fas fa-user"></i> Sign into Your Account
+        <i className="fas fa-user"></i> Sign into your account
       </p>
       <form className="form" onSubmit={onSubmit}>
         <div className="form-group">
@@ -41,15 +49,22 @@ const Login = () => {
             name="password"
             value={password}
             onChange={onChange}
+            required
           />
         </div>
         <input type="submit" className="btn btn-primary" value="Login" />
       </form>
-      <p className="my-1">
-        Don’t have an account? <Link to="/register">Sign Up</Link>
-      </p>
-    </>
+    </section>
   );
 };
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { login })(Login);

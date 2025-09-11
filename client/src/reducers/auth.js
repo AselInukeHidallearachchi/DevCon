@@ -1,4 +1,6 @@
 import {
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   USER_LOADED,
@@ -21,23 +23,21 @@ export default function authReducer(state = initialState, action) {
         ...state,
         isAuthenticated: true,
         loading: false,
-        user: payload, // user object from /api/auth
+        user: payload,
       };
-
+    case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
-      // Persist token so a page refresh can still authenticate
-      localStorage.setItem("token", payload.token);
+      localStorage.setItem("token", payload.token); // Store token in localStorage
       return {
         ...state,
-        ...payload, // { token }
+        token: payload.token,
         isAuthenticated: true,
         loading: false,
       };
-
-    case AUTH_ERROR:
+    case LOGIN_FAIL:
     case REGISTER_FAIL:
-      // Token invalid/absent — clear everything
-      localStorage.removeItem("token");
+    case AUTH_ERROR:
+      localStorage.removeItem("token"); // Remove token on error
       return {
         ...state,
         token: null,
@@ -45,7 +45,6 @@ export default function authReducer(state = initialState, action) {
         loading: false,
         user: null,
       };
-
     default:
       return state;
   }
