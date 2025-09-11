@@ -9,6 +9,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   LOGOUT,
+  CLEAR_PROFILE
 } from "./types";
 
 // Load user (using the token already set in localStorage)
@@ -74,5 +75,6 @@ export const login = (email, password) => async (dispatch) => {
 
 // Logout / Clear Profile
 export const logout = () => (dispatch) => {
+  dispatch({ type: CLEAR_PROFILE });
   dispatch({ type: LOGOUT });
 };
