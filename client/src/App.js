@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import "./App.css";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Alert from "./components/layout/Alert";
 import Dashboard from "./components/dashboard/Dashboard";
+import PrivateRoute from "./components/routing/PrivateRoute";
 
 ///Redux
 import store from "./store";
@@ -36,13 +37,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route
             path="/dashboard"
-            element={
-              store.getState().auth.isAuthenticated ? (
-                <Dashboard />
-              ) : (
-                <Navigate to="/login" />
-              )
-            }
+            element={<PrivateRoute component={Dashboard} />}
           />
         </Routes>
       </div>
