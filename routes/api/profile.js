@@ -5,6 +5,7 @@ const config = require("config");
 const request = require("request");
 const Profile = require("../../models/Profile");
 const User = require("../../models/User");
+const Post = require("../../models/Posts");
 const { check, validationResult } = require("express-validator");
 
 // @route    GET api/profile/me
@@ -152,8 +153,8 @@ router.delete("/", auth, async (req, res) => {
     // use findOneAndDelete (preferred) instead of deprecated/removed findOneAndRemove
     await Profile.findOneAndDelete({ user: req.user.id });
 
-    // TODO: Remove user's posts (if you have posts collection)
-
+    //Remove user posts
+    await Posts.deleteMany({ user: req.user.id });
     // Remove user
     // use findByIdAndDelete which is the standard pattern for deleting by _id
     await User.findByIdAndDelete(req.user.id);
