@@ -22,6 +22,16 @@ A full-stack MERN (MongoDB, Express, React, Node.js) social network for develope
 - [Contributing](#contributing)
 - [License](#license)
 
+## Screenshots
+
+Landing
+
+![Landing](./docs/screenshots/landing.png)
+
+Posts
+
+![Posts](./docs/screenshots/posts.png)
+
 ---
 
 ## Tech Stack
