@@ -1,9 +1,14 @@
 const mongoose = require("mongoose");
 const config = require("config");
-const db = config.get("mongoURI");
+// Prefer environment variable first to avoid relying on checked-in config files
+const db = process.env.MONGO_URI || (config.has("mongoURI") ? config.get("mongoURI") : null);
 
 const connectDB = async () => {
   try {
+    if (!db) {
+      console.error("No MongoDB connection string configured. Set MONGO_URI env var or config mongoURI.");
+      process.exit(1);
+    }
     // mongoose v6+ uses sensible defaults; no need to pass useNewUrlParser
     await mongoose.connect(db);
     console.log("MongoDB Connected...");

@@ -1,3 +1,5 @@
+// Load env vars first (for local dev via .env)
+require("dotenv").config();
 const express = require("express");
 const connectDB = require("./config/db");
 const path = require('path');

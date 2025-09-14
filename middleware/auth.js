@@ -12,7 +12,11 @@ module.exports = function (req, res, next) {
 
   try {
     // Verify token
-    const decoded = jwt.verify(token, config.get("jwtSecret"));
+    const secret = process.env.JWT_SECRET || (config.has("jwtSecret") ? config.get("jwtSecret") : undefined);
+    if (!secret) {
+      return res.status(500).json({ msg: "Server misconfiguration: missing JWT secret" });
+    }
+    const decoded = jwt.verify(token, secret);
 
     // Add user from payload to request object
     req.user = decoded.user;

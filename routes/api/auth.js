@@ -51,9 +51,14 @@ router.post(
 
       const payload = { user: { id: user.id } };
 
+      const jwtSecret = process.env.JWT_SECRET || (config.has("jwtSecret") ? config.get("jwtSecret") : undefined);
+      if (!jwtSecret) {
+        console.error("JWT_SECRET is not set. Set env var JWT_SECRET or config jwtSecret.");
+        return res.status(500).send("Server misconfiguration");
+      }
       jwt.sign(
         payload,
-        config.get("jwtSecret"),
+        jwtSecret,
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;

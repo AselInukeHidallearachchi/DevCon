@@ -284,3 +284,15 @@ Basic deploy checklist:
 
 ## License
 MIT
+
+## Security and Secrets Management
+
+- Real secrets must not be committed. This repo now prefers environment variables loaded from `.env` (local) via `dotenv` and platform config vars (production).
+- Steps to set up locally:
+  1. Copy `.env.example` to `.env` and fill in values for `MONGO_URI` and `JWT_SECRET` (and optional GitHub keys).
+  2. Run the server with `npm run server` or `npm run dev`.
+- If you accidentally commit a secret:
+  1. Rotate the secret immediately (Atlas: create a new DB user/password; JWT: change the secret).
+  2. Update your `.env`/platform variables with the new values.
+  3. Invalidate/leak-proof the old credentials (disable or delete).
+  4. If needed, purge git history using BFG or `git filter-repo` and force-push, then update any forks.

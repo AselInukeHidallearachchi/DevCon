@@ -1,6 +1,6 @@
 {
-  "mongoURI": "mongodb+srv://***REMOVED***.ua9hbad.mongodb.net/?retryWrites=true&w=majority&appName=DevConnector",
-  "jwtSecret": "***REMOVED***",
-  "githubClientId": "***REMOVED***",
-  "githubSecret": "***REMOVED***"
+  "mongoURI": "",
+  "jwtSecret": "",
+  "githubClientId": "",
+  "githubSecret": ""
 }
