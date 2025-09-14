@@ -2,6 +2,7 @@ import api from "../utils/api";
 import { setAlert } from "./alert";
 import {
   GET_POSTS,
+  GET_POST,
   POST_ERROR,
   UPDATE_LIKES,
   DELETE_POST,
@@ -77,6 +78,23 @@ export const removeLike = (id) => async (dispatch) => {
     dispatch({
       type: UPDATE_LIKES,
       payload: { id, likes: res.data },
+    });
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Get post
+export const getPost = (id) => async (dispatch) => {
+  try {
+    const res = await api.get(`/api/posts/${id}`);
+
+    dispatch({
+      type: GET_POST,
+      payload: res.data,
     });
   } catch (err) {
     dispatch({
