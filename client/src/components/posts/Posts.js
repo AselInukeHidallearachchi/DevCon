@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Spinner from "../layout/Spinner";
+import PostItem from "./PostItem";
 import { getPosts } from "../../actions/post";
 
 const Posts = ({ getPosts, post: { posts, loading } }) => {
@@ -20,7 +21,7 @@ const Posts = ({ getPosts, post: { posts, loading } }) => {
       {/* PostForm will go here */}
       <div className="posts">
         {posts.map((post) => (
-          <div key={post._id}>Post Item will go here</div>
+          <PostItem key={post._id} post={post} />
         ))}
       </div>
     </Fragment>
