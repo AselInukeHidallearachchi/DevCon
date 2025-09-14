@@ -1,0 +1,6 @@
+{
+  "mongoURI": "mongodb+srv://***REMOVED***.mongoDB.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "mysecrettoken",
+  "githubClientId": "yourid",
+  "githubSecret": "yoursecret"
+}
