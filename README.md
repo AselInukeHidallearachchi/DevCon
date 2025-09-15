@@ -1,8 +1,9 @@
 # DevConnector
 
 A full-stack MERN (MongoDB, Express, React, Node.js) social network for developers. Users can register, create and edit profiles, add experience and education, browse other developers, create posts, like/unlike, and comment. The app includes JWT auth, protected routes, Redux state management, Tailwind CSS UI, and a production build process ready for platforms like Heroku.
-<img width="1440" height="757" alt="posts" src="https://github.com/user-attachments/assets/e9bcf261-c18d-4ec8-aca1-779e79107046" />
 <img width="1440" height="788" alt="landing" src="https://github.com/user-attachments/assets/9ab35584-2675-4b3a-acc2-73e0b59f6412" />
+<img width="1440" height="757" alt="posts" src="https://github.com/user-attachments/assets/e9bcf261-c18d-4ec8-aca1-779e79107046" />
+
 
 
 ## Table of Contents
