@@ -240,8 +240,8 @@ Login
 
 ```json
 {
-  "email": "alex@example.com",
-  "password": "Welcome@Dev123"
+  "email": "johndoe@gmail.com",
+  "password": "123456"
 }
 ```
 
