@@ -1,8 +1,16 @@
 # DevHub
 
 A full-stack MERN (MongoDB, Express, React, Node.js) social network for developers. Users can register, create and edit profiles, add experience and education, browse other developers, create posts, like/unlike, and comment. The app includes JWT auth, protected routes, Redux state management, Tailwind CSS UI.
-<img width="1440" height="788" alt="landing" src="https://github.com/user-attachments/assets/9ab35584-2675-4b3a-acc2-73e0b59f6412" />
-<img width="1440" height="757" alt="posts" src="https://github.com/user-attachments/assets/e9bcf261-c18d-4ec8-aca1-779e79107046" />
+
+<img width="1440" height="789" alt="landing" src="https://github.com/user-attachments/assets/20d893aa-48ba-4195-a43a-c751af2ce497" />
+<img width="1440" height="538" alt="dashboard" src="https://github.com/user-attachments/assets/f07aa3eb-2cfe-43dc-bece-cefe78f663b8" />
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/a8743d85-41a2-432d-a153-91361def3b91" alt="profile" width="30%" />
+  <img src="https://github.com/user-attachments/assets/9adf3825-178c-4331-b6e1-1ae3d253e627" alt="posts" width="30%" />
+  <img src="https://github.com/user-attachments/assets/6e9392a6-97ab-4edd-9b8c-4292ff9e155b" alt="developers" width="30%" />
+</div>
+
 
 ## Table of Contents
 
